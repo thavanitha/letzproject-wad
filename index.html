@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102b25">
+  <title>NestNavigator | Find a place that feels like home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Pannellum powers the interactive 360-degree panorama viewer. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="NestNavigator home">
+      <span class="brand-mark">N</span><span>Nest<span class="brand-light">Navigator</span></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="#homes">Explore homes</a>
+      <a href="#how">How it works</a>
+      <a href="#calculator">Rent calculator</a>
+      <a href="#shortlist">My shortlist <span id="shortlistCount" class="nav-count">0</span></a>
+    </nav>
+    <a class="header-cta" href="#homes">Find a home <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow light-eyebrow"><span class="eyebrow-line"></span> A smarter way to rent</p>
+        <h1>Find a place.<br><em>Feel at home.</em></h1>
+        <p class="hero-copy">Verified homes, honest costs and a real feel for every room — before you ever visit.</p>
+        <a class="button button-light" href="#homes">Explore verified homes <span>→</span></a>
+        <div class="hero-proof">
+          <div class="proof-avatars"><span>R</span><span>A</span><span>S</span></div>
+          <p><strong>Made for confident moves</strong><br><small>Clear listings. Direct owner connections.</small></p>
+        </div>
+      </div>
+      <div class="hero-note"><span class="note-icon">✳</span><span>Less searching.<br>More settling in.</span></div>
+    </section>
+
+    <section class="trust-strip" aria-label="Platform benefits">
+      <div><strong>01</strong><span>Verified owner listings</span></div>
+      <div><strong>02</strong><span>Transparent move-in costs</span></div>
+      <div><strong>03</strong><span>Explore rooms in 360°</span></div>
+      <div><strong>04</strong><span>Connect directly</span></div>
+    </section>
+
+    <section class="section properties-section" id="homes">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE RIGHT PLACE IS OUT THERE</p><h2>Homes worth <em>coming home to.</em></h2></div>
+        <p class="section-intro">Explore owner-listed spaces with the details that matter, all in one place.</p>
+      </div>
+
+      <div class="search-panel">
+        <label class="search-field"><span>⌕</span><input id="locationSearch" type="search" placeholder="Search area or property name" aria-label="Search area or property name"></label>
+        <label><span class="field-label">Monthly rent</span><select id="rentFilter"><option value="all">Any budget</option><option value="15000">Under ₹15,000</option><option value="20000">Under ₹20,000</option><option value="25000">Under ₹25,000</option><option value="30000">Under ₹30,000</option><option value="40000">Under ₹40,000</option></select></label>
+        <label><span class="field-label">BHK</span><select id="bhkFilter"><option value="all">Any BHK</option><option value="1">1 BHK</option><option value="2">2 BHK</option><option value="3">3 BHK</option></select></label>
+        <label><span class="field-label">Furnishing</span><select id="furnishingFilter"><option value="all">Any</option><option>Furnished</option><option>Semi-furnished</option><option>Unfurnished</option></select></label>
+        <button class="button button-dark" id="applyFilters">Search homes <span>→</span></button>
+      </div>
+      <div class="extra-filters">
+        <label class="check-label"><input type="checkbox" id="petFilter"> Pet friendly</label>
+        <label class="check-label"><input type="checkbox" id="parkingFilter"> Parking available</label>
+        <button class="text-button" id="clearFilters">Clear all filters ↗</button>
+        <span id="resultCount" class="result-count" aria-live="polite"></span>
+      </div>
+      <div class="property-grid" id="propertyGrid" aria-live="polite"></div>
+      <div class="empty-state hidden" id="emptyState">No homes match those filters. Try widening your search.</div>
+    </section>
+
+    <section class="feature-band" id="how">
+      <div class="feature-band-copy">
+        <p class="eyebrow light-eyebrow"><span class="eyebrow-line"></span> SEE BEYOND THE PHOTOGRAPHS</p>
+        <h2>Take a look around.<br><em>From wherever you are.</em></h2>
+        <p>Explore a room with an interactive 360° panorama. Drag to look around and get a better sense of the space before planning a visit.</p>
+        <button class="button button-light" id="openDemoTour">Explore a sample 360° tour <span>↗</span></button>
+      </div>
+      <div class="tour-preview">
+        <div class="tour-image"></div>
+        <div class="tour-caption"><span class="live-dot"></span> VIRTUAL ROOM EXPERIENCE <span>360°</span></div>
+      </div>
+    </section>
+
+    <section class="section calculator-section" id="calculator">
+      <div class="section-heading">
+        <div><p class="eyebrow">KNOW BEFORE YOU MOVE</p><h2>Make the numbers <em>feel simple.</em></h2></div>
+        <p class="section-intro">See your estimated upfront costs and check whether the monthly rent fits your budget.</p>
+      </div>
+      <div class="calculator-layout">
+        <div class="calculator-form">
+          <label>Monthly rent (₹)<input type="number" id="calcRent" min="0" value="25000"></label>
+          <label>Security deposit (₹)<input type="number" id="calcDeposit" min="0" value="100000"></label>
+          <label>Maintenance / month (₹)<input type="number" id="calcMaintenance" min="0" value="3000"></label>
+          <label>Your monthly salary (₹)<input type="number" id="calcSalary" min="0" value="75000"></label>
+          <button class="button button-dark" id="calculateBtn">Calculate move-in cost <span>→</span></button>
+        </div>
+        <div class="calculator-result">
+          <p class="eyebrow light-eyebrow">YOUR ESTIMATED UPFRONT COST</p>
+          <p class="total-amount" id="totalMoveIn">₹1,28,000</p>
+          <div class="cost-line"><span>First month rent</span><strong id="outRent">₹25,000</strong></div>
+          <div class="cost-line"><span>Security deposit</span><strong id="outDeposit">₹1,00,000</strong></div>
+          <div class="cost-line"><span>Maintenance</span><strong id="outMaintenance">₹3,000</strong></div>
+          <div class="affordability"><span id="affordabilityDot"></span><p id="affordabilityText">Enter your salary to see your rent affordability.</p></div>
+          <small class="disclaimer">Estimate only. Confirm all charges directly with the property owner.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shortlist-section" id="shortlist">
+      <div class="section-heading">
+        <div><p class="eyebrow">KEEP YOUR FAVOURITES CLOSE</p><h2>Your shortlist, <em>your call.</em></h2></div>
+        <p class="section-intro">Save homes as you explore, then compare the details side by side.</p>
+      </div>
+      <div class="shortlist-toolbar"><span id="shortlistMessage">You haven't saved any homes yet.</span><button class="button button-outline" id="compareBtn">Compare selected homes <span>→</span></button></div>
+      <div id="shortlistGrid" class="shortlist-grid"></div>
+      <div id="comparisonPanel" class="comparison-panel hidden">
+        <div class="comparison-head"><h3>Property comparison</h3><button class="icon-button" id="closeComparison" aria-label="Close comparison">×</button></div>
+        <div id="comparisonContent"></div>
+      </div>
+    </section>
+
+    <section class="visit-section">
+      <div class="visit-copy"><p class="eyebrow light-eyebrow"><span class="eyebrow-line"></span> MEET THE SPACE IN PERSON</p><h2>Good homes deserve<br><em>a closer look.</em></h2><p>Choose a property and request a visit directly. The demo stores your request on this device.</p></div>
+      <form class="visit-form" id="visitForm">
+        <h3>Request a property visit</h3>
+        <label>Your name<input required id="visitorName" placeholder="Enter your name"></label>
+        <label>Email address<input required type="email" id="visitorEmail" placeholder="you@example.com"></label>
+        <label>Choose a property<select required id="visitProperty"><option value="">Select a property</option></select></label>
+        <div class="form-row"><label>Preferred date<input required type="date" id="visitDate"></label><label>Preferred time<select id="visitTime"><option>11:00 AM</option><option>12:00 PM</option><option>2:00 PM</option><option>4:00 PM</option><option>5:00 PM</option></select></label></div>
+        <button class="button button-dark" type="submit">Request a visit <span>→</span></button>
+        <p class="form-feedback" id="visitFeedback" role="status"></p>
+      </form>
+    </section>
+
+    <section class="section neighborhood-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE NEIGHBOURHOOD MATTERS</p><h2>Find your rhythm <em>around home.</em></h2></div>
+        <p class="section-intro">A quick sample estimate of nearby essentials and commute times. Actual results depend on location and traffic.</p>
+      </div>
+      <div class="neighborhood-layout">
+        <div class="neighborhood-card">
+          <p class="eyebrow">SAMPLE LIVABILITY SCORE</p><div class="score-row"><strong id="liveScore">86</strong><span>/ 100</span><span class="score-label">Good fit</span></div>
+          <div class="score-meter"><span id="scoreMeter"></span></div>
+          <div class="livability-items"><div><span>🛒</span><p><strong>Groceries</strong><small>Nearby access estimate</small></p><b>Good</b></div><div><span>＋</span><p><strong>Healthcare</strong><small>Nearby access estimate</small></p><b>Good</b></div><div><span>⌂</span><p><strong>Schools</strong><small>Nearby access estimate</small></p><b>Fair</b></div><div><span>♫</span><p><strong>Ambient noise</strong><small>Illustrative estimate</small></p><b>Moderate</b></div></div>
+        </div>
+        <div class="commute-card">
+          <p class="eyebrow">COMMUTE TIME ESTIMATOR</p><h3>How far is your everyday?</h3>
+          <label>Choose a sample property<select id="commuteProperty"></select></label>
+          <label>Travel mode<select id="travelMode"><option value="car">Driving</option><option value="transit">Public transport</option></select></label>
+          <div class="commute-result"><span>ESTIMATED ONE-WAY COMMUTE</span><strong id="commuteTime">25–35 min</strong><small id="commuteDestination">To major tech parks · illustrative only</small></div>
+          <p class="disclaimer">Demo estimates only — not live map or traffic data.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="agreement-section">
+      <div><p class="eyebrow light-eyebrow"><span class="eyebrow-line"></span> PAPERWORK, MADE CLEARER</p><h2>Start with the<br><em>important details.</em></h2><p>Create a sample 11-month rental agreement preview using the information you enter. Have a qualified professional review any real agreement before signing.</p></div>
+      <form class="agreement-form" id="agreementForm">
+        <h3>Rental agreement details</h3>
+        <label>Tenant full name<input required id="tenantName" placeholder="Tenant name"></label>
+        <label>Owner full name<input required id="ownerName" placeholder="Owner name"></label>
+        <label>Property address<input required id="agreementAddress" placeholder="Full rental property address"></label>
+        <div class="form-row"><label>Monthly rent (₹)<input required type="number" min="0" id="agreementRent" value="25000"></label><label>Security deposit (₹)<input required type="number" min="0" id="agreementDeposit" value="100000"></label></div>
+        <button class="button button-light" type="submit">Generate agreement preview <span>→</span></button>
+        <p id="agreementFeedback" class="form-feedback" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="brand footer-brand" href="#home"><span class="brand-mark">N</span><span>Nest<span class="brand-light">Navigator</span></span></a><p>Find a place. Feel at home.</p><small>Hackathon demonstration · Sample listings · © 2026 NestNavigator</small></footer>
+
+  <!-- Shared modal for property details and the 360° tour -->
+  <div class="modal hidden" id="propertyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card modal-large">
+      <button class="modal-close" data-close-modal aria-label="Close">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="agreementModal" role="dialog" aria-modal="true" aria-labelledby="agreementPreviewTitle">
+    <div class="modal-backdrop" data-close-agreement></div>
+    <div class="modal-card agreement-preview">
+      <button class="modal-close" data-close-agreement aria-label="Close">×</button>
+      <div id="agreementPreview"></div>
+      <button class="button button-dark" id="printAgreement">Print / Save as PDF</button>
+    </div>
+  </div>
+</body>
+</html>
